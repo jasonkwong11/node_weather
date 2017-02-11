@@ -1,0 +1,25 @@
+{
+  "name": "node_weather",
+  "version": "1.0.0",
+  "description": "a simple express app that gets the weather from Accuweather API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonkwong11/node_weather.git"
+  },
+  "author": "Jason Kwong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jasonkwong11/node_weather/issues"
+  },
+  "homepage": "https://github.com/jasonkwong11/node_weather#readme",
+  "dependencies": {
+    "express": "^4.14.1",
+    "express-handlebars": "^3.0.0",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
+  }
+}
