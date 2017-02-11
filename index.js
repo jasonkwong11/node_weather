@@ -1,6 +1,7 @@
 const express = require('express')
 const rp = require('request-promise')
 const exphbs = require('express-handlebars')
+const path = require('path')
 
 const app = express()
 
@@ -13,13 +14,18 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'views'))
 
-//GET the data from Accuweather API
+window.alert('HI')
+//GET the location key from Accuweather API
 app.get('/:city', (req, res) => {
   rp({
-    uri: 'http://apidev.accuweather.com/locations/v1/search',
+    uri: 'http://dataservice.accuweather.com/locations/v1/search',
     qs: {
       q: req.params.city,
-      apiKey: 'lszGWElRufBBbuGWwtJc95DPfp0NGXH5'
+      apiKey: 'lszGWElRufBBbuGWwtJc95DPfp0NGXH5',
+      language: 'en-us',
+      details: true,
+      offset: 0,
+      alias: 'NoOfficialMatchFound'
     },
     json: true
   })
