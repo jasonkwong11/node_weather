@@ -1,9 +1,12 @@
 var Client = require('node-rest-client').Client;
 const client = new Client();
 
+const mockData = require('./mockData');
+
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 var util = require('util');
+
 
 const initialize = () => {
   console.log('Checking the weather? Please enter a city, zipcode, or quit.')
@@ -22,7 +25,7 @@ const initialize = () => {
 
     var apiKey = 'lszGWElRufBBbuGWwtJc95DPfp0NGXH5'
 
-    //GET the location key from Accuweather API
+    //GET the location key from Accuweather API ... should return the location key
     client.get('http://dataservice.accuweather.com//locations/v1/search?apikey=' + apiKey + '&q=' + text, (data, response) => {
       console.log(`We found the ${data.length} matches for your query...`);
 
@@ -35,7 +38,19 @@ const initialize = () => {
         console.log('Please be more specific');
         return initialize();
       } 
-      data.forEach((city) => {console.log(city.EnglishName + ', ' + city.AdministrativeArea.LocalizedName + ', ' + city.AdministrativeArea.CountryID)})
+      //var numberOfCities = data.length;
+      var numberOfCities = mockData.length
+
+      //data.forEach((city) => {console.log(city.EnglishName + ', ' + city.AdministrativeArea.LocalizedName + ', ' + city.AdministrativeArea.CountryID)})
+      mockData.map((city, index) => {
+        console.log(index+1 + '. ' + city.EnglishName + ', ' + city.AdministrativeArea.LocalizedName + ', ' + city.AdministrativeArea.CountryID)
+      })
+      console.log("Which city is the best match? Enter a number:")
+      process.stdin.on('data', function (input){
+        //validate input is a Number
+
+        //validate input is between 1 and numberOfCities (inclusive)
+      });
     })
 
   })
