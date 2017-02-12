@@ -7,14 +7,15 @@ process.stdin.resume();
 process.stdin.setEncoding('utf8');
 var util = require('util');
 
+var apiData;
 const checkRange = (number, numberOfCities) => {
   var array = _.range(1, numberOfCities + 1);
-  array.find(() => { number }) ? true : false
+  array.includes(number)
 }
 
 const initialize = () => {
-  console.log('Checking the weather? Please enter a city, zipcode, or quit.')
 
+  console.log('Checking the weather? Please enter a city, zipcode, or quit.')
   process.stdin.on('data', function (text){
   
     if (text === '\n'){
@@ -42,28 +43,31 @@ const initialize = () => {
         console.log('Please be more specific');
         return initialize();
       } 
-
       var numberOfCities = data.length
      
       data.map((city, index) => {
         console.log(index+1 + '. ' + city.EnglishName + ', ' + city.AdministrativeArea.LocalizedName + ', ' + city.AdministrativeArea.CountryID)
       })
-      console.log("Which city is the best match? Enter a number:")
-      process.stdin.on('data', function (input){
-        //validate input is a Number
-        if (!Number(input)){
-          console.log("Please enter a valid number...")
-        }
-        //validate input is a Number && is between 1 and numberOfCities (inclusive)
-        if (Number(input) && checkRange(input, data.length)){
-          console.log('HERES THE INPUT:')
-          console.log(input)
-        }
 
-      });
+      apiData = Object.assign([], data);      
     })
-
   })
 }
 
-initialize()
+const getLocationKey = (apiData) => {
+  console.log("Which city is the best match? Enter a number:")
+  process.stdin.on('data', function (input){
+    //validate input is a Number
+    if (!Number(input)){
+      console.log("Please enter a valid number...")
+    }
+    //validate input is a Number && is between 1 and numberOfCities (inclusive)
+    if (Number(input) && checkRange(Number(input), apiData.length)){
+      console.log('HERES THE INPUT:')
+      console.log(input)
+    }
+
+  });
+}
+return Promise.all([initialize()]).then(getLocationKey(apiData))
+
