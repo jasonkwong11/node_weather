@@ -1,12 +1,16 @@
 var Client = require('node-rest-client').Client;
 const client = new Client();
-
+const _ = require('lodash')
 const mockData = require('./mockData');
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 var util = require('util');
 
+const checkRange = (number, numberOfCities) => {
+  var array = _.range(1, numberOfCities + 1);
+  array.find(() => { number }) ? true : false
+}
 
 const initialize = () => {
   console.log('Checking the weather? Please enter a city, zipcode, or quit.')
@@ -38,18 +42,24 @@ const initialize = () => {
         console.log('Please be more specific');
         return initialize();
       } 
-      //var numberOfCities = data.length;
-      var numberOfCities = mockData.length
 
-      //data.forEach((city) => {console.log(city.EnglishName + ', ' + city.AdministrativeArea.LocalizedName + ', ' + city.AdministrativeArea.CountryID)})
-      mockData.map((city, index) => {
+      var numberOfCities = data.length
+     
+      data.map((city, index) => {
         console.log(index+1 + '. ' + city.EnglishName + ', ' + city.AdministrativeArea.LocalizedName + ', ' + city.AdministrativeArea.CountryID)
       })
       console.log("Which city is the best match? Enter a number:")
       process.stdin.on('data', function (input){
         //validate input is a Number
+        if (!Number(input)){
+          console.log("Please enter a valid number...")
+        }
+        //validate input is a Number && is between 1 and numberOfCities (inclusive)
+        if (Number(input) && checkRange(input, data.length)){
+          console.log('HERES THE INPUT:')
+          console.log(input)
+        }
 
-        //validate input is between 1 and numberOfCities (inclusive)
       });
     })
 
