@@ -4,7 +4,8 @@
   "description": "a simple express app that gets the weather from Accuweather API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +18,7 @@
   },
   "homepage": "https://github.com/jasonkwong11/node_weather#readme",
   "dependencies": {
-    "express": "^4.14.1",
-    "express-handlebars": "^3.0.0",
+    "node-rest-client": "^2.5.0",
     "path": "^0.12.7",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
